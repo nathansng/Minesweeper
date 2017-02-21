@@ -3,8 +3,8 @@ import de.bezier.guido.*;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs = new ArrayList <MSButton>(); //ArrayList of just the minesweeper buttons that are mined
 
-public final static int NUM_ROWS = 20;
-public final static int NUM_COLS = 20;
+public final static int NUM_ROWS = 5;
+public final static int NUM_COLS = 5;
 
 void setup () {
     size(400, 400);
@@ -21,25 +21,19 @@ void setup () {
         }
     }
     
-    // while (bombs.size() <= 20) {
-    //     setBombs();
-    // }
-
-    for (int i = 0; i <= 50; i ++) {
-        setBombs();
-    }
-
+    setBombs();
 }
 
 
 public void setBombs() {
-    int row = (int)Math.random() * NUM_ROWS;
-    int col = (int)Math.random() * NUM_COLS;
+    while (bombs.size() < 20) {
+        int row = (int) (Math.random() * NUM_ROWS);
+        int col = (int) (Math.random() * NUM_COLS);
 
-    if (!bombs.contains(buttons[row][col])) {
-        bombs.add(buttons[row][col]);
+        if (!bombs.contains(buttons[row][col])) {
+            bombs.add(buttons[row][col]);
+        }
     }
-
 }
 
 
