@@ -6,6 +6,8 @@ private ArrayList <MSButton> bombs = new ArrayList <MSButton>(); //ArrayList of 
 public final static int NUM_ROWS = 5;
 public final static int NUM_COLS = 5;
 
+public int noBomb;
+
 void setup () {
     size(400, 400);
     textAlign(CENTER,CENTER);
@@ -22,11 +24,13 @@ void setup () {
     }
     
     setBombs();
+
+    noBomb = (NUM_ROWS * NUM_COLS) - bombs.size();
 }
 
 
 public void setBombs() {
-    while (bombs.size() < 20) {
+    while (bombs.size() < 10) {
         int row = (int) (Math.random() * NUM_ROWS);
         int col = (int) (Math.random() * NUM_COLS);
 
@@ -45,7 +49,9 @@ public void draw () {
 
 
 public boolean isWon() {
-    //your code here
+    if (noBomb <= 0) {
+        return true;
+    }
     return false;
 }
 
@@ -56,7 +62,7 @@ public void displayLosingMessage() {
 
 
 public void displayWinningMessage() {
-    //your code here
+    
 }
 
 
@@ -89,8 +95,29 @@ public class MSButton
     // called by manager
     
     public void mousePressed () {
+        noBomb -= 1;
         clicked = true;
-        //your code here
+        if (keyPressed == true) {
+            marked = !marked;
+            clicked = false;
+        } else if (bombs.contains(this)) {
+            displayLosingMessage();
+        } else if (countBombs(r, c) > 0) {
+            setLabel("" + countBombs(r, c));
+        } else {
+            if (isValid(r, c - 1) && !buttons[r][c - 1].clicked) {
+                buttons[r][c - 1].mousePressed();
+            }
+            if (isValid(r, c + 1) && !buttons[r][c + 1].clicked) {
+                buttons[r][c + 1].mousePressed();
+            }
+            if (isValid(r - 1, c) && !buttons[r - 1][c].clicked) {
+                buttons[r - 1][c].mousePressed();
+            }
+            if (isValid(r + 1, c) && !buttons[r + 1][c].clicked) {
+                buttons[r + 1][c].mousePressed();
+            }
+        }
     }
 
 
