@@ -3,8 +3,8 @@ import de.bezier.guido.*;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs = new ArrayList <MSButton>(); //ArrayList of just the minesweeper buttons that are mined
 
-public final static int NUM_ROWS = 5;
-public final static int NUM_COLS = 5;
+public final static int NUM_ROWS = 20;
+public final static int NUM_COLS = 20;
 
 public int noBomb;
 
@@ -30,7 +30,7 @@ void setup () {
 
 
 public void setBombs() {
-    while (bombs.size() < 10) {
+    while (bombs.size() < 25) {
         int row = (int) (Math.random() * NUM_ROWS);
         int col = (int) (Math.random() * NUM_COLS);
 
@@ -116,6 +116,18 @@ public class MSButton
             }
             if (isValid(r + 1, c) && !buttons[r + 1][c].clicked) {
                 buttons[r + 1][c].mousePressed();
+            }
+            if (isValid(r + 1, c - 1) && !buttons[r + 1][c - 1].clicked) {
+                buttons[r + 1][c - 1].mousePressed();
+            }
+            if (isValid(r - 1, c + 1) && !buttons[r - 1][c + 1].clicked) {
+                buttons[r - 1][c + 1].mousePressed();
+            }
+            if (isValid(r - 1, c - 1) && !buttons[r - 1][c - 1].clicked) {
+                buttons[r - 1][c - 1].mousePressed();
+            }
+            if (isValid(r + 1, c + 1) && !buttons[r + 1][c + 1].clicked) {
+                buttons[r + 1][c + 1].mousePressed();
             }
         }
     }
