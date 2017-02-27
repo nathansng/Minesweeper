@@ -7,6 +7,8 @@ public final static int NUM_ROWS = 20;
 public final static int NUM_COLS = 20;
 
 public int bombNum = 75;
+public int numFlags = bombNum;
+public boolean hasFlags = true;
 
 public int xWidth = 600;
 public int yHeight = 600;
@@ -15,7 +17,8 @@ public boolean isLost = false;
 public boolean gameOver = false;
 
 void setup () {
-    size(600, 600);
+
+    size(600, 650);
     textAlign(CENTER,CENTER);
     
     // make the manager
@@ -46,7 +49,19 @@ public void setBombs() {
 
 
 public void draw () {
-    background( 0 );
+    background(255);
+    if (!gameOver) {
+        textSize(30);
+        color(255);
+        text("Bombs Left: " + numFlags, 300, 625);
+        textSize(20);
+    } else {
+        textSize(30);
+        color(255);
+        text("GAMEOVER", 300, 625);
+        textSize(20);
+    }
+
     if(isWon()) {
         gameOver = true;
         displayWinningMessage();
@@ -108,6 +123,7 @@ public void keyPressed(){
               buttons[r][c].setLabel("");
               buttons[r][c].marked = false;
               buttons[r][c].clicked = false;
+              numFlags = 75;
             }
         }
         setBombs(); 
@@ -148,10 +164,14 @@ public class MSButton
             clicked = true;
         }
         if (mouseButton == RIGHT && label.equals("") && !clicked) {
+            if (isMarked()) {
+                numFlags ++;
+            } else {
+                numFlags --;
+            }
             marked = !marked;
             clicked = false;
         } else if (bombs.contains(this)) {
-            //displayLosingMessage();
             isLost = true;
         } else if (countBombs(r, c) > 0) {
             setLabel("" + countBombs(r, c));
