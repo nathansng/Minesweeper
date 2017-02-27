@@ -11,7 +11,7 @@ body {
 
 p, #desc {
     display: block;
-    float: margin;
+    float: left;
     margin-left: 8%;
     margin-right: 8%;
     text-align: left;
@@ -20,9 +20,12 @@ p, #desc {
 }
 
 #content {
-    display: block;
+    display: inline-block;
+    position: absolute;
+    float: right;
     margin-left: auto;
-    margin-right: auto
+    margin-right: auto;
+    clear: both;
 }
 
 header {
