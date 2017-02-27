@@ -6,10 +6,16 @@ private ArrayList <MSButton> bombs = new ArrayList <MSButton>(); //ArrayList of 
 public final static int NUM_ROWS = 20;
 public final static int NUM_COLS = 20;
 
-public int noBomb;
+public int bombNum = 75;
+
+public int xWidth = 600;
+public int yHeight = 600;
+public boolean isLost = false;
+
+public boolean gameOver = false;
 
 void setup () {
-    size(400, 400);
+    size(600, 600);
     textAlign(CENTER,CENTER);
     
     // make the manager
@@ -24,13 +30,11 @@ void setup () {
     }
     
     setBombs();
-
-    noBomb = (NUM_ROWS * NUM_COLS) - bombs.size();
 }
 
 
 public void setBombs() {
-    while (bombs.size() < 25) {
+    while (bombs.size() < bombNum) {
         int row = (int) (Math.random() * NUM_ROWS);
         int col = (int) (Math.random() * NUM_COLS);
 
@@ -44,25 +48,68 @@ public void setBombs() {
 public void draw () {
     background( 0 );
     if(isWon())
+        gameOver = true;
         displayWinningMessage();
+    else if (isLost == true) {
+        gameOver = true;
+        displayLosingMessage();
+    }
 }
 
 
 public boolean isWon() {
-    if (noBomb <= 0) {
-        return true;
+    for (int r = 0; r < NUM_ROWS; r ++) {
+        for (int c = 0; c < NUM_COLS; c ++) {
+            if (!bombs.contains(buttons[r][c]) && !buttons[r][c].isClicked()) {
+                return false;
+            }
+        }
     }
-    return false;
+    return true;
 }
 
 
 public void displayLosingMessage() {
-    //your code here
+    String losingMessage = "YOU LOSE";
+
+    for (int r = 0; r < NUM_ROWS; r ++) {
+        for (int c = 0; c < NUM_COLS; c ++) {
+            if (bombs.contains(buttons[r][c])) {
+                buttons[r][c].mousePressed();
+            }
+        }
+    } 
+
+    for (int c = 5; c < losingMessage.length() + 5; c ++) {
+        buttons[(int)(NUM_ROWS / 2)][c].setLabel(losingMessage.substring(c - 5, c - 4));
+    }
+
+    
 }
 
 
 public void displayWinningMessage() {
-    
+    String winningMessage = "YOU WIN!";
+
+    for (int c = 6; c < winningMessage.length() + 6; c ++) {
+        buttons[9][c].setLabel(winningMessage.substring(c - 6, c - 5));
+    }
+}
+
+public void keyPressed(){
+    for(int r = 0; r < NUM_ROWS; r++)
+    {
+      for(int c = 0; c < NUM_COLS; c++)
+      {
+          isLost = false;
+          gameOver = false;
+          bombs.remove(buttons[r][c]);
+          buttons[r][c].setLabel("");
+          buttons[r][c].marked = false;
+          buttons[r][c].clicked = false;
+        }
+    }
+    setBombs(); 
 }
 
 
@@ -74,8 +121,8 @@ public class MSButton
     private String label;
     
     public MSButton ( int rr, int cc ) {
-        width = 400/NUM_COLS;
-        height = 400/NUM_ROWS;
+        width = xWidth/NUM_COLS;
+        height = yHeight/NUM_ROWS;
         r = rr;
         c = cc; 
         x = c*width;
@@ -95,13 +142,15 @@ public class MSButton
     // called by manager
     
     public void mousePressed () {
-        noBomb -= 1;
-        clicked = true;
-        if (keyPressed == true) {
+        if (mouseButton == LEFT && label.equals("") && !marked) {
+            clicked = true;
+        }
+        if (mouseButton == RIGHT && label.equals("") && !clicked) {
             marked = !marked;
             clicked = false;
         } else if (bombs.contains(this)) {
-            displayLosingMessage();
+            //displayLosingMessage();
+            isLost = true;
         } else if (countBombs(r, c) > 0) {
             setLabel("" + countBombs(r, c));
         } else {

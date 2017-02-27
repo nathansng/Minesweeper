@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 	<head>
 		<meta charset="utf-8">
-		<title>Title</title>
+		<title>Minesweeper</title>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="styles.css">
 		<script src="processing.js"></script>
@@ -9,14 +9,19 @@
 	</head>
 	<body>
 		<header>
-			<h1>Header</h1>
+			<h1>Minesweeper</h1>
 		</header>
+			<section id = "desc">
+				<h3>Minesweeper Instructions:</h3>
+				<p> - Click to uncover mines
+				<br>- Right click to mark potential mines
+				<br>- Win by uncovering all blocks with no bombs
+				<br>- Press any keys to restart
+				</p>
+			</section>	
 			<section id="content">
 				<canvas id="Minesweeper" data-processing-sources="Minesweeper.pde">
 				</canvas>
 		    </section>
-	    <footer>
-		    Footer
-	    </footer>
 	</body>
 </html>

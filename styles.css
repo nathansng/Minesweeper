@@ -1,8 +1,22 @@
 body {
-    background-color: rgb(200,200,200);
+    background: url('Minesweeper Background.jpg');
+    background-repeat: none;
+    background-size: cover;
+    background-position: center center;
+
     color: rgb(0,0,0);
     font-family: "Open Sans", sans-serif;
     text-align: center;
+}
+
+p, #desc {
+    display: block;
+    float: margin;
+    margin-left: 8%;
+    margin-right: 8%;
+    text-align: left;
+    font-size: 18px;
+    max-width: 320px;
 }
 
 #content {
@@ -13,9 +27,4 @@ body {
 
 header {
 	
-}
-
-footer {
-	font-style: italic;
-	font-size: 90%;
 }
