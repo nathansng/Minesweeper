@@ -10,6 +10,7 @@ body {
 }
 
 p, #desc {
+    background: rgb(255, 255, 255);
     display: block;
     float: margin;
     margin-left: 8%;
