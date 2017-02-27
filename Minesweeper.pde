@@ -47,10 +47,10 @@ public void setBombs() {
 
 public void draw () {
     background( 0 );
-    if(isWon())
+    if(isWon()) {
         gameOver = true;
         displayWinningMessage();
-    else if (isLost == true) {
+    } else if (isLost == true) {
         gameOver = true;
         displayLosingMessage();
     }
