@@ -3,10 +3,10 @@ import de.bezier.guido.*;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs = new ArrayList <MSButton>(); //ArrayList of just the minesweeper buttons that are mined
 
-public final static int NUM_ROWS = 20;
-public final static int NUM_COLS = 20;
+public final static int NUM_ROWS = 30;
+public final static int NUM_COLS = 30;
 
-public int bombNum = 75;
+public int bombNum = 100;
 public int numFlags = bombNum;
 public boolean hasFlags = true;
 
@@ -15,6 +15,9 @@ public int yHeight = 600;
 public boolean isLost = false;
 
 public boolean gameOver = false;
+public int timed = 0;
+public int seconds = 0;
+public boolean mouseStart = false;
 
 void setup () {
 
@@ -53,17 +56,29 @@ public void draw () {
     if (!gameOver) {
         textSize(30);
         color(255);
-        text("Bombs Left: " + numFlags, 300, 625);
-        textSize(20);
+        text("Bombs Left: " + numFlags, 150, 625);
+
+        if (mouseStart == true) {
+            seconds ++;
+            if (seconds >= 60) {
+                seconds = 0;
+                timed ++;
+            }
+        }
+        text("Time: " + timed, 450, 625);
+
+        textSize(10);
+
     } else {
         textSize(30);
         color(255);
         text("GAMEOVER", 300, 625);
-        textSize(20);
+        textSize(10);
     }
 
     if(isWon()) {
         gameOver = true;
+        mouseStart = false;
         displayWinningMessage();
     } else if (isLost == true) {
         gameOver = true;
@@ -95,8 +110,8 @@ public void displayLosingMessage() {
         }
     } 
 
-    for (int c = 5; c < losingMessage.length() + 5; c ++) {
-        buttons[(int)(NUM_ROWS / 2)][c].setLabel(losingMessage.substring(c - 5, c - 4));
+    for (int c = 12; c < losingMessage.length() + 12; c ++) {
+        buttons[(int)(NUM_ROWS / 2)][c].setLabel(losingMessage.substring(c - 12, c - 11));
     }
 
     
@@ -106,8 +121,8 @@ public void displayLosingMessage() {
 public void displayWinningMessage() {
     String winningMessage = "YOU WIN!";
 
-    for (int c = 6; c < winningMessage.length() + 6; c ++) {
-        buttons[9][c].setLabel(winningMessage.substring(c - 6, c - 5));
+    for (int c = 13; c < winningMessage.length() + 13; c ++) {
+        buttons[9][c].setLabel(winningMessage.substring(c - 13, c - 12));
     }
 }
 
@@ -123,7 +138,10 @@ public void keyPressed(){
               buttons[r][c].setLabel("");
               buttons[r][c].marked = false;
               buttons[r][c].clicked = false;
-              numFlags = 75;
+              numFlags = bombNum;
+              mouseStart = false;
+              seconds = 0;
+              timed = 0;
             }
         }
         setBombs(); 
@@ -160,6 +178,8 @@ public class MSButton
     // called by manager
     
     public void mousePressed () {
+        mouseStart = true;
+
         if (mouseButton == LEFT && label.equals("") && !marked) {
             clicked = true;
         }
