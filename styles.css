@@ -21,13 +21,12 @@ p, #desc {
 
 #content {
     display: inline-block;
-    position: absolute;
-    float: right;
+    float: center;
     margin-left: auto;
     margin-right: auto;
     clear: both;
 }
 
 header {
-	
+	font-size: 30px;
 }

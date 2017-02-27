@@ -97,19 +97,21 @@ public void displayWinningMessage() {
 }
 
 public void keyPressed(){
-    for(int r = 0; r < NUM_ROWS; r++)
-    {
-      for(int c = 0; c < NUM_COLS; c++)
-      {
-          isLost = false;
-          gameOver = false;
-          bombs.remove(buttons[r][c]);
-          buttons[r][c].setLabel("");
-          buttons[r][c].marked = false;
-          buttons[r][c].clicked = false;
+    if (key == 32) {
+        for(int r = 0; r < NUM_ROWS; r++)
+        {
+          for(int c = 0; c < NUM_COLS; c++)
+          {
+              isLost = false;
+              gameOver = false;
+              bombs.remove(buttons[r][c]);
+              buttons[r][c].setLabel("");
+              buttons[r][c].marked = false;
+              buttons[r][c].clicked = false;
+            }
         }
+        setBombs(); 
     }
-    setBombs(); 
 }
 
 
