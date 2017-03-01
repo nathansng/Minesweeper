@@ -6,20 +6,21 @@ private ArrayList <MSButton> bombs = new ArrayList <MSButton>(); //ArrayList of 
 public final static int NUM_ROWS = 30;
 public final static int NUM_COLS = 30;
 
-public int bombNum = 100;
+public int bombNum = 150;
 public int numFlags = bombNum;
 public boolean hasFlags = true;
 
 public int xWidth = 600;
 public int yHeight = 600;
 public boolean isLost = false;
-
+ 
 public boolean gameOver = false;
 public int timed = 0;
 public int seconds = 0;
 public boolean mouseStart = false;
 
 void setup () {
+    frameRate(60);
 
     size(600, 650);
     textAlign(CENTER,CENTER);
@@ -70,10 +71,17 @@ public void draw () {
         textSize(10);
 
     } else {
-        textSize(30);
-        color(255);
-        text("GAMEOVER", 300, 625);
-        textSize(10);
+        if (!isWon()) {
+            textSize(30);
+            color(255);
+            text("GAMEOVER  YOU LOSE", 300, 625);
+            textSize(10);
+        } else {
+            textSize(30);
+            color(255);
+            text("WINNER!!!!    Time Taken: " + timed, 300, 625);
+            textSize(10);
+        }
     }
 
     if(isWon()) {
@@ -121,8 +129,8 @@ public void displayLosingMessage() {
 public void displayWinningMessage() {
     String winningMessage = "YOU WIN!";
 
-    for (int c = 13; c < winningMessage.length() + 13; c ++) {
-        buttons[9][c].setLabel(winningMessage.substring(c - 13, c - 12));
+    for (int c = 11; c < winningMessage.length() + 11; c ++) {
+        buttons[(int)(NUM_ROWS / 2)][c].setLabel(winningMessage.substring(c - 11, c - 10));
     }
 }
 
