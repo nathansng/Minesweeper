@@ -88,7 +88,7 @@ public void draw () {
         gameOver = true;
         mouseStart = false;
         displayWinningMessage();
-    } else if (isLost == true) {
+    } else if (isLost) {
         gameOver = true;
         displayLosingMessage();
     }
